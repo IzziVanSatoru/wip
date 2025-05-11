@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jauza Portfolio</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+    :root {
+      --bg-light: #ffffff;
+      --bg-dark: #0e0e0e;
+      --text-light: #000000;
+      --text-dark: #ffffff;
+      --primary: #00fff7;
+      --card-bg: #1a1a1a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: 'Orbitron', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: 0.3s ease;
+      overflow-x: hidden;
+    }
+    body.dark { background: var(--bg-dark); color: var(--text-dark); }
+    nav {
+      display: flex; justify-content: space-between;
+      padding: 1rem 2rem;
+      position: sticky; top: 0; z-index: 10;
+      background: inherit;
+      border-bottom: 1px solid #444;
+    }
+    nav a, nav button {
+      margin-left: 1rem;
+      color: inherit;
+      background: none;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-toggle {
+      padding: 0.5rem 1rem;
+      background: var(--primary);
+      color: #000;
+      border-radius: 6px;
+    }
+    header {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 80vh;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    section {
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      color: white;
+      margin: 1rem 0;
+      box-shadow: 0 0 10px var(--primary);
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.02);
+    }
+    .grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    canvas {
+      width: 100%;
+      max-width: 400px;
+      margin: auto;
+      display: block;
+    }
+    footer {
+      background: #000;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hidden { opacity: 0; transform: translateY(50px); }
+  </style>
+</head>
+<body>
+  <nav class="hidden">
+    <div><strong>Mastah</strong></div>
+    <div>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#certs">Certificates</a>
+      <a href="#socials">Socials</a>
+      <a href="#hobbies">Hobbies</a>
+      <button class="btn-toggle" onclick="toggleDarkMode()">Mode</button>
+    </div>
+  </nav>
+
+  <header class="hidden">
+    <h1>Jauza Portfolio</h1>
+    <p>Frontend. Backend and Web Development</p>
+  </header>
+
+  <section id="about" class="hidden">
+    <h2>About Me</h2>
+    <p>Saya Jauza, siswa SMK Al Hasra. Fokus di Web Development (Vue, React, Preact, PHP).</p>
+    <div style="margin-top: 2rem;">
+      <h3>Education</h3>
+      <div class="card">SMK Al Hasra<br/><small>2023 - Sekarang</small></div>
+    </div>
+  </section>
+
+  <section id="skills" class="hidden">
+    <h2>Skills</h2>
+    <div class="grid">
+      <div class="card">Vue</div>
+      <div class="card">React</div>
+      <div class="card">Preact</div>
+      <div class="card">PHP</div>
+      <div class="card">Express</div>
+      <div class="card">Firebase</div>
+      <div class="card">PostgreSQL</div>
+    </div>
+  </section>
+
+  <section id="certs" class="hidden">
+    <h2>Certificates</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Frontend Bootcamp</h3>
+        <img src="135235997.png" alt="Frontend Certificate" />
+      </div>
+      <div class="card">
+        <h3>React Developer</h3>
+        <img src="jauza-react-dev.png" alt="React Certificate" />
+      </div>
+    </div>
+  </section>
+
+  <section id="socials" class="hidden">
+    <h2>Social Media</h2>
+    <div class="grid">
+      <div class="card"><h3>LinkedIn</h3><a href="#">linkedin.com</a></div>
+      <div class="card"><h3>GitHub</h3><a href="#">github.com/IzziVanSatoru</a></div>
+      <div class="card"><h3>Instagram</h3><a href="#">joustarfallen</a></div>
+    </div>
+  </section>
+
+  <section id="hobbies" class="hidden">
+    <h2>My Hobbies</h2>
+    <div class="card" style="background: white; color: black; text-align: center;">
+      <canvas id="hobbyChart" width="300" height="300"></canvas>
+    </div>
+  </section>
+
+  <footer class="hidden">
+    &copy; 2025 Jauza Portfolio.
+  </footer>
+
+  <!-- Terminal Intro -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script>
+    const terminal = document.createElement('div');
+    terminal.style.position = 'fixed';
+    terminal.style.top = '0';
+    terminal.style.left = '0';
+    terminal.style.width = '100%';
+    terminal.style.height = '100%';
+    terminal.style.background = '#000';
+    terminal.style.color = '#0f0';
+    terminal.style.fontFamily = 'monospace';
+    terminal.style.fontSize = '1.2rem';
+    terminal.style.display = 'flex';
+    terminal.style.alignItems = 'center';
+    terminal.style.justifyContent = 'center';
+    terminal.style.zIndex = '9999';
+
+    const span = document.createElement('span');
+    span.id = "typewriter";
+    terminal.appendChild(span);
+    document.body.appendChild(terminal);
+
+    new Typed("#typewriter", {
+      strings: ["Hello, I'm Jauza — Fullstack Developer..."],
+      typeSpeed: 40,
+      showCursor: true,
+      onComplete: () => {
+        setTimeout(() => {
+          gsap.to(terminal, {
+            duration: 0.5,
+            opacity: 0,
+            onComplete: () => {
+              terminal.remove();
+              startGSAPAnim();
+            }
+          });
+        }, 500);
+      }
+    });
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    function startGSAPAnim() {
+      gsap.utils.toArray(".hidden").forEach((el, i) => {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          delay: i * 0.15
+        });
+      });
+    }
+
+    // Chart load langsung
+    window.addEventListener("DOMContentLoaded", () => {
+      const ctx = document.getElementById('hobbyChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Baca Novel', 'Baca Buku Berat', 'Nonton Anime', 'Review Manga', 'Main Game'],
+          datasets: [{
+            data: [98, 96, 10, 10, 0.2],
+            backgroundColor: ['#00fff7', '#007bff', '#ff007f', '#00c853', '#ff9800'],
+            borderColor: '#ffffff',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          cutout: '70%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#000',
+                font: { family: 'Orbitron', size: 13 }
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
